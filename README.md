@@ -1,6 +1,6 @@
 # tada
 
-tada is a slideshow system written in HTML, CSS, and JS, and styled to look like [https://prose.nsood.in/](my blog). the various branches on this repository should, over time, become the various talks that I have given. the `main` branch hosts the latest version of tada, until I can figure out some better way to separate logic and prose.
+tada is a slideshow system written in HTML, CSS, and JS, and styled to look like [my blog](https://prose.nsood.in/). the various branches on this repository should, over time, become the various talks that I have given. the `main` branch hosts the latest version of tada, until I can figure out some better way to separate logic and prose.
 
 you can serve it with any ol' HTTP server:
 
