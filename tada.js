@@ -36,6 +36,11 @@ function Slider(slider, opts = {}) {
                     return true;
                 }
             }
+            if(slides[n].classList.contains('slider')) {
+                if(sliders[Number(slides[n].getAttribute('data-slider-id'))].next()) {
+                    return true;
+                }
+            }
         }
 
         // make next slide visible, if there is one
@@ -58,6 +63,11 @@ function Slider(slider, opts = {}) {
             // traversal order between next() and prev() somehow?
             for(const c of [...slides[n].querySelectorAll('.slider')].reverse()) {
                 if(sliders[Number(c.getAttribute('data-slider-id'))].prev()) {
+                    return true;
+                }
+            }
+            if(slides[n].classList.contains('slider')) {
+                if(sliders[Number(slides[n].getAttribute('data-slider-id'))].prev()) {
                     return true;
                 }
             }
