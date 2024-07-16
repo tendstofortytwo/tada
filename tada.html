@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="fonts/css/inter.css">
+    <link rel="stylesheet" href="fonts/css/nunito.css">
+    <link rel="stylesheet" href="fonts/css/fontawesome.min.css">
+    <link rel="stylesheet" href="tada.css">
+    <title>Tada!</title>
+</head>
+<body>
+    <main class="slider" data-start-idx="7">
+        <section class="slide">
+            <h1>How to create a presentation using modern Web 5.0 technologies</h1>
+            <h2>Google Slides is too mainstream, PowerPoint is capitalist propaganda, and Keynote is for hipsters.</h2>
+            <p class="author">@tendstofortytwo</p>
+            <p class="slider" data-start-first-hidden="true">
+                <sup>I have nothing against LibreOffice users.</sup>
+            </p>
+            <div class="bottom" style="align-items: flex-end;">
+                <a href="https://tends.to/talk-about-tada">https://tends.to/talk-about-tada</a>
+            </div>
+        </section>
+        <section class="slide">
+            <h1>Why would you want to do this?</h1>
+            <ol class="slider" data-visibility="multi" data-start-first-hidden="true">
+                <li>You are allergic to WYSIWYG software.</li>
+                <li>
+                    You already have a visual brand for your blog that you want to steal from.<br>
+                    <img src="img/blog-embed.png" style="width: 40rem" alt="A screenshot of an opengraph embed of a blog post of mine, which says, 'Writing a lambda calculus interpreter in Rust. Blazing-fast unreadably-dense mathematical objects for everyone.'">
+                </li>
+                <li>
+                    Why not?
+                </li>
+            </ol>
+        </section>
+        <section class="slide">
+            <h1>Sliders</h1>
+            <ul class="slider" data-visibility="multi">
+                <li>A slider is an HTML element whose children are slides.</li>
+                <li>A slide is an HTML element that is initially hidden, but eventually becomes visible as its parent slider advances.</li>
+                <li>
+                    Like this:<br>
+                    <img src="img/code-sample-1.png" style="width: 60rem" alt="An HTML represenation of the first two slides.">
+                </li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h1>Moving between slides</h1>
+            <div class="slider" data-visibility="multi">
+                <img src="img/code-sample-1-point-5.png" alt="Code that when the right arrow key is clicked, increments n, and when the left arrow key is clicked, decrements it. Then it takes the slider and makes its n-th child visible.">
+                <p>But what about stuff like this?</p>
+            </div>
+        </section>
+        <section class="slide">
+            <h1>Moving between slides</h1>
+            <div class="slider" data-visibility="multi">
+                <p>Could duplicate slides...</p>
+                <img src="img/code-sample-2.png" alt="The code for the last slide, including the entire code sample, and then the same code duplicated, but with the final paragraph added in." style="width: 25rem">
+                <p>...but that sucks. We can do better.</p>
+            </div>
+        </section>
+        <section class="slide">
+            <h1>Nesting sliders</h1>
+            <div class="slider" data-visibility="multi">
+                <p>What if we put a slideshow... inside our slideshow?</p>
+                <img src="img/code-sample-3.png" alt="A screenshot of the code for this very slide. A slide inside a slide, talking about a slideshow inside a slideshow.">
+            </div>
+        </section>
+        <section class="slide">
+            <h1>Sidequest: abstraction</h1>
+            <div class="slider" data-visibility="multi">
+                <p>Seems like we need to create a lot of sliders. Would be nice if we could make it easier to make them!</p>
+                <div class="slider" data-visibility="multi" style="display: flex; align-items: flex-start; justify-content: space-around;">
+                    <img src="img/code-sample-4.png" alt="The slider creation JavaScript code broken out into a class.">
+                    <img src="img/code-sample-5.png" alt="The keypress code using the abstracted slider. It's much smaller and cleaner than before!">
+                </div>
+            </div>
+        </section>
+        <section class="slide">
+            <h1>Nesting sliders</h1>
+            <div class="slider posrel">
+                <img src="img/code-sample-7.png" alt="Code that loops over all HTML elements with class name slider and makes a JavaScript Slider object out of them. It stores the object in an array, and stores the index of the object in the array back into the element." class="posabstl">
+                <div class="posabstl slider" data-visibility="multi">
+                    <img src="img/code-sample-8.png" alt="Code for the next slide function. Before it advances to the next slides, it looks for any sliders inside the current slide, and tries to advance one of those first. If that happens successfully, it returns early.">
+                    <p>Code for <code>prev()</code> is left as an exercise to the viewer.</p>
+                </div>
+            </div>
+        </section>
+        <section class="slide">
+            <h1>More details</h1>
+            <ul class="slider" data-visibility="multi" data-start-first-hidden="true">
+                <li>
+                    Actually show multiple visible slides at a time.
+                    <ul class="slider" data-start-first-hidden="true">
+                        <li>Otherwise multiple slides in a nested slider...</li>
+                        <li>...will look like this.</li>
+                    </ul>
+                </li>
+                <li>Start with the first slide hidden, for dramatic effect.</li>
+                <li>Support starting at the N-th slide, for debugging/writing.</li>
+                <li>
+                    <div class="slider" data-visibility="multi">
+                        <div>
+                            <p>Whatever the fuck this is:</p>
+                            <img src="img/code-sample-9.png" alt="TODO: querySelectorAll does a depth-first search, and a reversal of a DFS is not a DFS starting from reverse. Canonicalize this traversal order between next() and prev() somehow?">
+                        </div>
+                        <p>There's a reason I left <code>prev()</code> for the reader.</p>
+                    </div>
+                </li>
+                <li>Probably much more...</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <div class="eof">EOF</div>
+        </section>
+    </main>
+    <script src="fonts/attribution.js"></script>
+    <script src="tada.js"></script>
+</body>
+</html>
