@@ -8,121 +8,179 @@
     <link rel="stylesheet" href="fonts/css/fontawesome.min.css">
     <link rel="stylesheet" href="tada.css">
     <title>Tada!</title>
+    <style>
+        .math {
+            color: #6e8245;
+            display: inline;
+            font-family: serif;
+        }
+    </style>
 </head>
 <body>
     <main class="slider">
         <section class="slide">
-            <h1>How to create a presentation using modern Web 5.0 technologies</h1>
-            <h2>Google Slides is too mainstream, PowerPoint is capitalist propaganda, and Keynote is for hipsters.</h2>
+            <h1>A brief introduction to the lambda calculus</h1>
+            <h2>Now with 100% fewer integrals than competing calculi!</h2>
             <p class="author">@tendstofortytwo</p>
-            <p class="slider" data-start-first-hidden="true">
-                <sup>I have nothing against LibreOffice users.</sup>
-            </p>
             <div class="bottom" style="align-items: flex-end;">
-                <a href="https://tends.to/talk-about-tada">https://tends.to/talk-about-tada</a>
+                <a href="https://tends.to/talk-about-lambda-calc">https://tends.to/talk-about-lambda-calc</a>
             </div>
         </section>
         <section class="slide">
-            <h1>Why would you want to do this?</h1>
-            <ol class="slider" data-visibility="multi" data-start-first-hidden="true">
-                <li>You are allergic to WYSIWYG software.</li>
-                <li>
-                    You already have a visual brand for your blog that you want to steal from.<br>
-                    <img src="img/blog-embed.png" style="width: 40rem" alt="A screenshot of an opengraph embed of a blog post of mine, which says, 'Writing a lambda calculus interpreter in Rust. Blazing-fast unreadably-dense mathematical objects for everyone.'">
-                </li>
-                <li>
-                    Why not?
-                </li>
-            </ol>
+            <h1>Expressions</h1>
+            <div class="slider multi">
+                <p>Expressions are the building blocks of lambda calculus. They are the "things" that we work with.</p>
+                <p class="slider multi" style="display: flex; gap: 3rem;">
+                    <span class="math">x</span>
+                    <span class="math">\x.x</span>
+                    <span class="math">(\x.x) y</span>
+                </p>
+                <ul class="slider multi">
+                    <li>
+                        A <strong>variable</strong>, usually denoted by a single alphabet, say <span class="math">x</span></math>
+                        <ul>
+                            <li>Can be <strong>free</strong> or <strong>bound</strong></li>
+                            <li>A free variable has no meaning in the current context, whereas a bound meaning refers to a particular instance of a variable</li>
+                        </ul>
+                    </li>
+                    <li>
+                        An <strong>abstraction</strong>, which contains a <strong>bound variable</strong> <span class="math">x</span> and a nested lambda calculus expresssion <span class="math">M</span> (the body). Usually written like <span class="math">\x.M</span>
+                        <ul>
+                            <li>Any <span class="math">x</span> inside of <span class="math">M</span> is considered bound to this particular instance of <span class="math">x</span></li>
+                            <li>The <span class="math">M</span> extends as far to the right as it can &mdash; so <span class="math">\x.x y z</span> means <span class="math">\x.(x y z)</span>, not <span class="math">(\x.x) y z</span></li>
+                            <li>Think of this as a function that takes an <span class="math">x</span> and puts it in <span class="math">M</span></li>
+                        </ul>
+                    </li>
+                    <li>
+                        An <strong>application</strong>, which consists of two nested lambda calculus expressions <span class="math">M</span> and <span class="math">N</span>. Usually written like <span class="math">M N</span>, though for disambiguation reasons we sometimes parenthesize it like <span class="math">(M N)</span>
+                        <ul>
+                            <li>Applications are left-associative &mdash; this just means that <span class="math">a b c</span>
+                                means <span class="math">((a b) c)</span>, not <span class="math">(a (b c))</span>
+                            </li>
+                            <li>Think of this as calling a function with an argument</li>
+                            <li>The first part (<span class="math">M</span>) is called the <strong>rator</strong> and the second part (<span class="math">N</span>) is called the <strong>rand</strong>. Don't ask me why</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </section>
         <section class="slide">
-            <h1>Sliders</h1>
-            <ul class="slider" data-visibility="multi">
-                <li>A slider is an HTML element whose children are slides.</li>
-                <li>A slide is an HTML element that is initially hidden, but eventually becomes visible as its parent slider advances.</li>
+            <h1>Reductions</h1>
+            <ul class="slider multi first-hidden">
                 <li>
-                    Like this:<br>
-                    <img src="img/code-sample-1.png" style="width: 60rem" alt="An HTML represenation of the first two slides.">
+                    <strong>Alpha-conversion</strong>: Turn an expression like <span class="math">\x.x y z</span> into <span class="math">\n.n y z</span>
+                    <ul>
+                        <li>Essentially, renaming a bound variable of an abstraction</li>
+                        <li>Note that a renaming like <span class="math">\y.y y z</span> is not allowed! This changes the meaning of the second <span class="math">y</span> from a free variable to a bound variable. Alpha-conversion must use fresh variable names.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Beta-reduction</strong>: Turn an expression like <span class="math">(\x.x y) w</span> into <span class="math">w y</span>
+                    <ul>
+                        <li>Assuming you have an application where the rator (left side) is an abstraction, you replace the bound variable of the abstraction everywhere in its body, with thr rand (right side) of the application</li>
+                        <li>If abstractions are like functions and applications are like function calls, this is the process of actually doing the call</li>
+                    </ul>
+                </li>
+                <li>
+                    Sometimes you have to alpha-convert before you can beta-reduce. Consider the function <span class="math">\x.\y.x</span>
+                    <ul class="slider multi first-hidden">
+                        <li><span class="math">(\x.\y.x) a b</span> &rarr; <span class="math">(\y.a) b</span> &rarr; <span class="math">a</span> simple enough</li>
+                        <li><span class="math">(\x.\y.x) y z</span> &rarr; <span class="math">(\y.y) z</span> &rarr; <span class="math">z</span> wrong, returns second argument, computing theorists will laugh at you</li>
+                        <li><span class="math">(\x.\y.x) y z</span> &rarr; <span class="math">(\x.\w.x) y z</span> &rarr; <span class="math">(\w.y) z</span> &rarr; <span class="math">y</span> correct, returns first argument, computing theorists will think you're cool</li>
+                    </ul>
                 </li>
             </ul>
         </section>
         <section class="slide">
-            <h1>Moving between slides</h1>
-            <div class="slider" data-visibility="multi">
-                <img src="img/code-sample-1-point-5.png" alt="Code that when the right arrow key is clicked, increments n, and when the left arrow key is clicked, decrements it. Then it takes the slider and makes its n-th child visible.">
-                <p>But what about stuff like this?</p>
-            </div>
-        </section>
-        <section class="slide">
-            <h1>Moving between slides</h1>
-            <div class="slider" data-visibility="multi">
-                <p>Could duplicate slides...</p>
-                <img src="img/code-sample-2.png" alt="The code for the last slide, including the entire code sample, and then the same code duplicated, but with the final paragraph added in." style="width: 25rem">
-                <p>...but that sucks. We can do better.</p>
-            </div>
-        </section>
-        <section class="slide">
-            <h1>Thinking with sliders</h1>
-            <div class="slider" data-visibility="multi">
-                <p>What if we put a slideshow... inside our slideshow?</p>
-                <img src="img/code-sample-3.png" alt="A screenshot of the code for this very slide. A slide inside a slide, talking about a slideshow inside a slideshow.">
-            </div>
-        </section>
-        <section class="slide">
-            <h1>Sidequest: abstraction</h1>
-            <div class="slider" data-visibility="multi">
-                <p>Seems like we need to create a lot of sliders. Would be nice if we could make it easier to make them!</p>
-                <div class="slider" data-visibility="multi" style="display: flex; align-items: flex-start; justify-content: space-around;">
-                    <img src="img/code-sample-4.png" alt="The slider creation JavaScript code broken out into a class.">
-                    <img src="img/code-sample-5.png" alt="The keypress code using the abstracted slider. It's much smaller and cleaner than before!">
-                </div>
-            </div>
-        </section>
-        <section class="slide">
-            <h1>Thinking with sliders</h1>
-            <div class="slider posrel">
-                <div class="posabstl slider" data-visibility="multi">
-                    <img src="img/code-sample-3.png" alt="The code sample from before, showing the code for a slider, a slide inside it, and another slider nested inside that.">
-                    <img src="img/code-sample-7.png" alt="Code that loops over all HTML elements with class name slider and makes a JavaScript Slider object out of them. It stores the object in an array, and stores the index of the object in the array back into the element.">
-                </div>
-                <div class="posabstl slider" data-visibility="multi">
-                    <img src="img/code-sample-8.png" alt="Code for the next slide function. Before it advances to the next slides, it looks for any sliders inside the current slide, and tries to advance one of those first. If that happens successfully, it returns early.">
-                    <p>Code for <code>prev()</code> is left as an exercise to the viewer.</p>
-                </div>
-            </div>
-        </section>
-        <section class="slide">
-            <h1>More details</h1>
-            <ul class="slider" data-visibility="multi" data-start-first-hidden="true">
+            <h1>And that's it!</h1>
+            <ul class="slider multi">
+                <li>That's all of lambda calculus.</li>
+                <li>But what can we do with it?</li>
+                <li>Turns out, <strong>everything</strong>.</li>
+                <li>Lambda calculus expressions are Turing-complete!</li>
                 <li>
-                    Actually show multiple visible slides at a time.
-                    <ul class="slider" data-start-first-hidden="true">
-                        <li>Otherwise multiple slides in a nested slider...</li>
-                        <li>...will look like this.</li>
-                    </ul>
+                    Let's do some programming.<br>
+                    <img src="img/hackerman.jpg" alt="hackerman" style="max-height: 20rem">
                 </li>
-                <li>Start with the first slide hidden, for dramatic effect.</li>
-                <li>Support starting at the N-th slide, for debugging/writing.</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h1>Booleans</h1>
+            <ul class="slider multi first-hidden">
+                <li>We can represent <code>true</code> and <code>false</code> as functions that take two values and return either the first value (if the condition is true) or second one (if it is false).</li>
+                <li><code>true = </code><span class="math">\t.\f.t</span>, <code>false = </code><span class="math">\t.\f.f</span></li>
+                <li>Then we can represent <code>if</code> as a function that takes a condition, something to return if the condition is true (then-value), and something to return if the condition is false (else-value). Call the condition with the then and else values, and true and false will return the correct value respectively.</li>
+                <li><code>if = </code><span class="math">\c.\t.\f.c t f</span></li>
                 <li>
-                    <div class="slider" data-visibility="multi">
-                        <div>
-                            <p>Whatever the fuck this is:</p>
-                            <img src="img/code-sample-9.png" alt="TODO: querySelectorAll does a depth-first search, and a reversal of a DFS is not a DFS starting from reverse. Canonicalize this traversal order between next() and prev() somehow?">
-                        </div>
-                        <p>There's a reason I left <code>prev()</code> for the reader.</p>
+                    With that, we can do things like:
+                    <div class="slider posrel"> <!-- non-multi slider -->
+                        <ul>
+                            <li><code>if true</code> <span class="math">x y</span></li>
+                            <li>&rarr; <span class="math">(\c.\t.\f.c t f) (\t.\f.t) x y</span></li>
+                            <li>&rarr; <span class="math">(\t.\f.(\t.\f.t) t f) x y</span></li>
+                            <li>&rarr; <span class="math">(\t.\f.(\f.t) f) x y</span></li>
+                            <li>&rarr; <span class="math">(\t.\f.t) x y</span></li>
+                            <li>&rarr; <span class="math">(\f.x) y</span></li>
+                            <li>&rarr; <span class="math">x</span></li>
+                        </ul>
+                        <ul class="posabstl">
+                            <li><code>if false</code> <span class="math">x y</span></li>
+                            <li>&rarr; <span class="math">(\c.\t.\f.c t f) (\t.\f.f) x y</span></li>
+                            <li>&rarr; <span class="math">(\t.\f.(\t.\f.f) t f) x y</span></li>
+                            <li>&rarr; <span class="math">(\t.\f.(\f.f) f) x y</span></li>
+                            <li>&rarr; <span class="math">(\t.\f.f) x y</span></li>
+                            <li>&rarr; <span class="math">(\f.f) y</span></li>
+                            <li>&rarr; <span class="math">y</span></li>
+                        </ul>
                     </div>
                 </li>
-                <li>Probably much more...</li>
+                <li>[insert demo 1]</li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h1 class="slider multi">
+                <span>Numbers</span><sup>(at least the natural kind)</sup><sup><sup>[natural includes zero fight me]</sup></sup>
+            </h1>
+            <ul class="slider multi first-hidden">
+                <li>We can represent a natural number N as functions that take two values <span class="math">f</span> and <span class="math">x</span> and apply <span class="math">f</span> to <span class="math">x</span> N times.</li>
+                <li>So 0 is <span class="math">\f. \x. x</span>, 1 is <span class="math">\f. \x. f x</span>, 2 is <span class="math">\f. \x. f (f x)</span>, 3 is <span class="math">\f. \x. f (f (f x))</span>, etc.</li>
+                <li>This is called <strong>Church encoding</strong>, named after (that's right) Alonzo Church.</li>
+                <li>With this, we can define addition like <span class="math">\m. \n. \f. \x. m (n f x)</span></li>
+                <li>[insert demo 2]</li>
+                <li>And multiplication, like <span class="math">\m.\n.\f.\x.m (n f) x</span></li>
+                <li>And checking if a number is zero like <span class="math">\n.n (\x.false) true</span> = <span class="math">\n.n (\x.\t.\f.f) \t.\f.t</span></li>
+                <li>And returning the predecessor of a number like <span class="math">\n.\f.\x. n (\g.\h.h (g f)) (\u.x) (\u.u)</span></li>
+            </ul>
+        </section>
+        <section class="slide">
+            <h1>Recursion</h1>
+            <ul class="slider multi first-hidden">
+                <li>We've been calling a lot of functions, but so far all the functions we've called were passed down to us. How do we call... ourselves?</li>
+                <li>
+                    <div>Enter, the Y combinator:</div>
+                    <span class="math" style="display: block; text-align: center">Y = \f.(\x.f (x x)) (\x.f (x x))</span>
+                </li>
+                <li><span class="math">Y</span> takes a function <span class="math">f</span>, and passes it a reference to <span class="math">f</span> itself. So <span class="math">Y \f.\n.if (isZero n) one (multiply n (f (pred n)))</span> is, uhhh...</li>
+                <li>[insert demo 3]</li>
             </ul>
         </section>
         <section class="slide">
             <div class="eof">EOF</div>
             <div class="bottom" style="align-items: flex-end;">
-                <a href="https://tends.to/talk-about-tada">https://tends.to/talk-about-tada</a>
+                <a href="https://tends.to/talk-about-lambda-calc">https://tends.to/talk-about-lambda-calc</a><br>
+                <a href="https://prose.nsood.in/rust-lambda">https://prose.nsood.in/rust-lambda</a>
             </div>
         </section>
     </main>
     <script src="fonts/attribution.js"></script>
     <script src="tada.js"></script>
+    <script>
+        Array.prototype.forEach.call(
+            document.querySelectorAll('span.math'),
+            function(el) {
+                el.innerText = el.innerText.split('\\').join('λ')
+            }
+        )
+    </script>
 </body>
 </html>
