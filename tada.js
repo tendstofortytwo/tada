@@ -93,8 +93,8 @@ function Slider(slider, opts = {}) {
 for(const slider of document.querySelectorAll('.slider')) {
     let idx = sliders.length;
     sliders.push(new Slider(slider, {
-        slideVisibility: slider.getAttribute('data-visibility') || 'single',
-        startWithFirstHidden: slider.hasAttribute('data-start-first-hidden'),
+        slideVisibility: slider.getAttribute('data-visibility') || slider.classList.contains('multi') ? 'multi' : 'single',
+        startWithFirstHidden: slider.hasAttribute('data-start-first-hidden') || slider.classList.contains('first-hidden'),
         startIndex: Number(slider.getAttribute('data-start-idx')) || 0,
         sliderID: idx,
     }));
