@@ -3,9 +3,11 @@
 }
 
 html {
-    --accentHueSat: 196, 77%;
-    --accentColor: hsl(var(--accentHueSat), 55%);
-    --faintAccentColor: hsl(var(--accentHueSat), 85%);
+    --bgColor: #f1e5fc;
+    --bodyColor: #440e74;
+    --fadeColor: #8359a2;
+    --accentColor: #e6e632;
+    --faintAccentColor: rgb(254, 254, 128);
     font-size: 0.85vw;
     font-family: 'Nunito', sans-serif;
 }
@@ -14,6 +16,8 @@ body {
     margin: 0;
     overflow: hidden;
     position: relative;
+    background-color: var(--bgColor);
+    color: var(--bodyColor);
 }
 
 .slide {
@@ -30,7 +34,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background: white;
+    background: var(--bgColor);
 }
 
 .slider > * {
@@ -74,7 +78,7 @@ h2 {
     line-height: 1.2;
     font-weight: 400;
     font-style: italic;
-    color: #777;
+    color: var(--fadeColor);
 }
 
 a {
@@ -113,7 +117,7 @@ p {
 }
 
 p.author {
-    color: #777;
+    color: var(--fadeColor);
 }
 
 ul, ol, dl {
